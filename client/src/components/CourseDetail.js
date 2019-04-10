@@ -26,10 +26,10 @@ class CourseDetail extends Component {
     getCourseTitle(){
         return this.state.courses.map(course => {
             return (
-                <div key={course._id} className="course--header">
+                <div className="course--header">
                 <h4 className="course--label">Course</h4>
-                <h3  className="course--title">{course.title}</h3>
-                <p>By Joe Smith</p>
+                <h3 className="course--title">{course.title}</h3>
+                <p>`By ${course.user.firstName}`</p>
                 </div>
             )
         })
