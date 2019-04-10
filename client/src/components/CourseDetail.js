@@ -4,9 +4,9 @@ import React from 'react';
 const CourseDetail = (props) => {
 
     const courses = props.data;
-    const course = courses.map(course =>
+    const course = courses.map( (course, index) =>
         
-        <h3 className="course--title" key={course.id} value={course}>{course.title}</h3>    
+        <h3 className="course--title" key={index} data-id={course._id}>{course.title}</h3>    
     );
     
     return (
@@ -21,7 +21,7 @@ const CourseDetail = (props) => {
             <div>
             <div className="actions--bar">
                 <div className="bounds">
-                <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="#">Delete Course</a></span><a className="button button-secondary" href="index.html">Return to List</a></div>
+                <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="#">Delete Course</a></span><a className="button button-secondary" href="/">Return to List</a></div>
                 </div>
             </div>
             <div className="bounds course--detail">
