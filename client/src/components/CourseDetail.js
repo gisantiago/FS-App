@@ -3,11 +3,7 @@ import React from 'react';
 
 const CourseDetail = (props) => {
 
-    const courses = props.data;
-    const course = courses.map( (course, index) =>
-        
-        <h3 className="course--title" key={index} data-id={course._id}>{course.title}</h3>    
-    );
+
     
     return (
         <div>
@@ -28,9 +24,10 @@ const CourseDetail = (props) => {
                 <div className="grid-66">
                 <div className="course--header">
                     <h4 className="course--label">Course</h4>
-                    {course}
-                    <h3 className="course--title">Build a Basic Bookcase</h3>
-                    {course}
+                  
+                    
+                    <h3  className="course--title">Course Title</h3>
+                    
                     <p>By Joe Smith</p>
                 </div>
                 <div className="course--description">
