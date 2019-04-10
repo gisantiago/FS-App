@@ -5,7 +5,8 @@ const CourseDetail = (props) => {
 
     const courses = props.data;
     const course = courses.map(course =>
-        <h1 key={course._id}>{course.title}</h1>    
+        
+        <h3 className="course--title" key={course.id} value={course}>{course.title}</h3>    
     );
     
     return (
@@ -29,6 +30,7 @@ const CourseDetail = (props) => {
                     <h4 className="course--label">Course</h4>
                     {course}
                     <h3 className="course--title">Build a Basic Bookcase</h3>
+                    {course}
                     <p>By Joe Smith</p>
                 </div>
                 <div className="course--description">
