@@ -38,6 +38,7 @@ class Courses extends Component {
        
     }
     render(){
+        console.log(this.state.courses);
         return (
             <div>
                 

@@ -4,18 +4,21 @@ import axios from 'axios';
 
 class CourseDetail extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            courses: []
-        };
+    // constructor(props) {
+    //     super(props)
+    //     this.state = {
+    //         course: null
+    //     };
+    // }
+    state = {
+        course: []
     }
     
     componentDidMount() {
-        axios.get(`http://localhost:5000/api/courses/${this.props.match.params._id}`)
+        axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(res => {
                 this.setState({
-                    courses: res.data
+                    course: res.data
                 });
         })
           .catch(error => {
@@ -23,19 +26,10 @@ class CourseDetail extends Component {
         });
     }
 
-    getCourseTitle(){
-        return this.state.courses.map(course => {
-            return (
-                <div className="course--header">
-                <h4 className="course--label">Course</h4>
-                <h3 className="course--title">{course.title}</h3>
-                <p>`By ${course.user.firstName}`</p>
-                </div>
-            )
-        })
-    }
-
+   
+    
     render () {
+        console.log(this.state.course);
         return (
             <div>
                 {/* <div className="header">
@@ -54,7 +48,11 @@ class CourseDetail extends Component {
                 <div className="bounds course--detail">
                     <div className="grid-66">
 
-                    {this.getCourseTitle()}
+                    <div className="course--header">
+                    <h4 className="course--label">Course</h4>
+                    <h3 className="course--title">{this.state.course.title}</h3>
+                    {/* <p>By {`${this.state.course.user.firstName} ${this.state.course}`}</p> */}
+                    </div>
 
                     <div className="course--description">
                         <p>High-end furniture projects are great to dream about. But unless you have a well-equipped shop and some serious woodworking experience to draw on, it can be difficult to turn the dream into a reality.</p>
