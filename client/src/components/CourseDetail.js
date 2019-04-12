@@ -18,7 +18,8 @@ class CourseDetail extends Component {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(res => {
                 this.setState({
-                    course: res.data
+                    course: res.data,
+                    user: `${res.data.user.firstName} ${res.data.user.lastName}`
                 });
         })
           .catch(error => {
@@ -29,7 +30,7 @@ class CourseDetail extends Component {
    
     
     render () {
-        console.log(this.state.course);
+        console.log(this.state.user);
         return (
             <div>
                 {/* <div className="header">
@@ -51,7 +52,7 @@ class CourseDetail extends Component {
                     <div className="course--header">
                     <h4 className="course--label">Course</h4>
                     <h3 className="course--title">{this.state.course.title}</h3>
-                    {/* <p>By {`${this.state.course.user.firstName} ${this.state.course}`}</p> */}
+                    <p>By {this.state.user}</p>
                     </div>
 
                     <div className="course--description">
