@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 import {
@@ -6,6 +7,9 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+
+
+
 
 
 import './global.css';
@@ -16,31 +20,40 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
+//import UserSignOut from './components/UserSignOut';
+
+
+
+
+
 
 export default class App extends Component {
 
+ 
+
 
   render() {
-
+   
     return (
       <BrowserRouter>
-        <div className="container">
-          <Header />
-          
-          
-          <Switch>
-            <Route exact path={["/", "/Courses"]} component={ Courses }/>
-            <Route exact path="/CourseDetail/:id" component={ CourseDetail }  />
-            <Route exact path="/UserSignIn" component={ UserSignIn } />
-            <Route exact path="/UserSignUp" component={ UserSignUp } />
-            <Route exact path="/CreateCourse" component={ CreateCourse } />
-            <Route exact path="/UpdateCourse" component={ UpdateCourse } />
-          </Switch>
+        
+          <div className="container">
+            
+            <Header />
 
-
-
-
-        </div>
+            <Switch>
+              <Route exact path={["/", "/Courses"]} component={ Courses }/>
+              <Route exact path="/UserSignIn" component={ UserSignIn } />
+              <Route exact path="/Courses/CreateCourse" component={ CreateCourse } />
+              <Route exact path="/Courses/:id/UpdateCourse" component={ UpdateCourse } />
+              <Route exact path="/CourseDetail/:id" component={ CourseDetail }  />
+              
+              <Route exact path="/UserSignUp" component={ UserSignUp } />
+              <Route exact path="/UserSignOut" />
+            </Switch>
+          </div>
+      
+      
       </BrowserRouter>
     );
   }

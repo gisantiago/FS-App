@@ -5,7 +5,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cors": "^2.8.5",
+    "create-react-context": "^0.2.3",
     "react": "^16.8.6",
+    "react-check-auth": "^0.2.0-alpha.2",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8"
