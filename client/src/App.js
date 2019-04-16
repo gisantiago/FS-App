@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Provider } from './Context';
-import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
 import {
@@ -23,75 +22,16 @@ import UpdateCourse from './components/UpdateCourse';
 
 export default class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-      firstName: null,
-      lastName: null,
-      emailAddress: null,
-      password: null,
-      isAuth: false
-    };
-  }
-
-  componentDidMount() {
-    this.getAuthenticated();
-    this.getUser();
-    this.getUnAuthenticated();
-  }
-
-  getAuthenticated = () => {
-    const session_url = 'http://localhost:5000/api/users';
-    
-    axios.post(session_url, {
-      auth: {
-        username: this.state.emailAddress,
-        password: this.state.password
-      }
-    }).then(res => {
-      this.setState({
-          user: `${res.data.firstName} ${res.data.lastName}`,
-          // isAuth: true
-      });
-    }).then(function(response) {
-      console.log('Authenticated');
-    }).catch(function(error) {
-      console.log('Error on Authentication');
-    });
-  }
-
-  getUnAuthenticated = () => {
-    this.setState({
-      user: null,
-      // isAuth: false
-    });
-  }
-
-  getUser = () => {
-    axios.get(`http://localhost:5000/api/users`)
-        .then(res => {
-            this.setState({
-                user: res.data,
-            });
-    })
-      .catch(error => {
-        console.log('Error fetching and parsing data', error);
-    });
-  }
+  
 
 
-  render() {
-    console.log(this.state.user)
+  render() {    
     return (
-      <Provider value={{
-        isAuth: this.state.isAuth, 
-        user: this.state.user 
-      }}>
+      <Provider>
         <BrowserRouter>
             <div className="container">
               
-              <Header data={this.state.user}/>
+              <Header />
 
               <Switch>
                 <Route exact path={["/", "/Courses"]} component={ Courses }/>

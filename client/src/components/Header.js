@@ -2,9 +2,6 @@ import React from 'react';
 import { Consumer } from '../Context';
 
 
-
-
-
 const Header = (props) => {
     return (
         <Consumer>
@@ -14,7 +11,7 @@ const Header = (props) => {
                     <div className="bounds">
                         <h1 className="header--logo" >Courses</h1>
                             { context.isAuth ? (
-                                <nav><span>Welcome {context.isAuth}!</span><a className="signout" href="index.html">Sign Out</a></nav>
+                                <nav><span>Welcome {context.user}!</span><a className="signout" href="index.html">Sign Out</a></nav>
                             ) : (
                                 <nav><a className="signup" href="/UserSignUp">Sign Up</a><a className="signin" href="/UserSignIn">Sign In</a></nav>
                             ) 
