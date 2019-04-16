@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+const session_url = `http://localhost:5000/api/users`;
 
 const AuthContext = React.createContext();
 
@@ -19,35 +20,35 @@ export class Provider extends Component {
       }
     
 
-      getAuthenticated = () => {
-        const session_url = 'http://localhost:5000/api/users';
+      getAuthenticated = (e) => {
         
-        axios.post(session_url, {
-          auth: {
-            username: this.state.emailAddress,
-            password: this.state.password
-          }
+        e.preventDefault();
+        const username = this.state.emailAddress;
+        const password = this.state.password;
+        const basicAuth = 'Basic ' + btoa(username + ':' + password);
+        axios.get({
+            session_url,
+            headers: { 'Authorization': + basicAuth }
         }).then(res => {
-          this.setState({
-              user: `${res.data.firstName} ${res.data.lastName}`,
-            //   isAuth: true
-          });
-        }).then(function(response) {
-          console.log('Authenticated');
+            this.setState({
+                user: `${res.data.firstName} ${res.data.lastName}`,
+                isAuth: true,
+            });
+            console.log('Authenticated');
         }).catch(function(error) {
-          console.log('Error on Authentication');
+        console.log('Error on Authentication');
         });
       }
     
       getUnAuthenticated = () => {
         this.setState({
           user: null,
-        //   isAuth: false
+          isAuth: false
         });
       }
     
       getUser = () => {
-        axios.get(`http://localhost:5000/api/users`)
+        axios.get(session_url)
             .then(res => {
                 this.setState({
                     user: res.data,
@@ -58,15 +59,26 @@ export class Provider extends Component {
         });
       };
 
+      userInput = (e) => {
+          this.setState({
+              [e.target.input]: e.target.value
+          })
+      }
+
       render() {
         return (
           <AuthContext.Provider
             value={{
                 isAuth: this.state.isAuth, 
-                getAuthenticated: this.getAuthenticated,
-                etUser: this.getUser,
-                getUnAuthenticated: this.getUnAuthenticated,
-                user: this.state.user 
+                user: this.state.user,
+                username: this.state.emailAddress,
+                password: this.state.password,
+                actions: {
+                    getAuthenticated: this.getAuthenticated,
+                    getUser: this.getUser,
+                    getUnAuthenticated: this.getUnAuthenticated,
+                    userInput: this.userInput
+                }
             }}>          
                 {this.props.children}
           </AuthContext.Provider>

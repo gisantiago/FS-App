@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Consumer } from '../Context';
 
 
 const UserSignIn = (props) => {
     return (
         <Consumer>
-            {context => (
+            {({ actions }) => (
                 <div>
                 {/* <div className="header">
                     <div className="bounds">
@@ -18,10 +18,13 @@ const UserSignIn = (props) => {
                     <div className="grid-33 centered signin">
                     <h1>Sign In</h1>
                     <div>
-                        <form>
-                        <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" value="" /></div>
-                        <div><input id="password" name="password" type="password" className="" placeholder="Password" value="" /></div>
-                        <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign In</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='./Courses';">Cancel</button></div>
+                        <form onSubmit={actions.getAuthenticated}>
+                        <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange={actions.userInput} /></div>
+                        <div><input id="password" name="password" type="password" className="" placeholder="Password" onChange={actions.userInput} /></div>
+                        <div className="grid-100 pad-bottom">
+                            <button className="button" type="submit">Sign In</button>
+                            <button className="button button-secondary">Cancel</button>
+                        </div>
                         </form>
                     </div>
                     <p>&nbsp;</p>
