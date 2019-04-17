@@ -61,8 +61,8 @@ export class Provider extends Component {
 
       userInput = (e) => {
           this.setState({
-              [e.target.input]: e.target.value
-          })
+              [e.target.id]: e.target.value
+          });
       }
 
       render() {
@@ -85,9 +85,5 @@ export class Provider extends Component {
         );
       }
 }
-
-
-
-
 
 export const Consumer = AuthContext.Consumer;

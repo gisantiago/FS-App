@@ -15,6 +15,7 @@ import UpdateCourse from './components/UpdateCourse';
 //import UserSignOut from './components/UserSignOut';
 
 export default class App extends Component {
+  
   render() {    
     return (
       <Provider>
