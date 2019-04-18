@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-const session_url = `http://localhost:5000/api/users`;
+import { AsyncStorage } from 'react-native';
 
 
 const AuthContext = React.createContext();
@@ -16,17 +16,23 @@ export class Provider extends Component {
           lastName: null,
           emailAddress: null,
           password: null,
+          id: null,
           isAuth: false
         };
       }
     
-
-      getAuthenticated = (e) => {
+    async saveItem(item, selectedValue) {
+        try{
+            AsyncStorage.setItem(item, selectedValue);
+        } catch (error) {
+            console.error('AsyncStorage error: ' );
+        }
+    }
+      getAuthenticated =  (e) => {
         
         e.preventDefault();
-        // const username = this.state.emailAddress;
-        // const password = this.state.password;
-        // const basicAuth = 'Basic ' + btoa(username + ':' + password);
+        // if (!this.state.emailAddress || !this.state.password) return;
+
         axios.get(`http://localhost:5000/api/users`, {
             // headers: { 'Authorization': + basicAuth }
             auth: {
@@ -34,12 +40,14 @@ export class Provider extends Component {
                 password: this.state.password
             }
         }).then(res => {
-            
             this.setState({
                 user: `${res.data.firstName} ${res.data.lastName}`,
-                isAuth: true,
+                isAuth: true
             });
-            console.log('Authenticated')
+            localStorage.setItem("user");
+            console.log('Authenticated');
+            // window.location='/courses'
+            this.saveItem('id_token', res.id_token);
         }).catch(function(error) {
         console.log('Error on Authentication');
         });
@@ -50,25 +58,32 @@ export class Provider extends Component {
             user: null,
             isAuth: false
         });
+        localStorage.removeItem("user");
       }
     
-      getUser = () => {
-        axios.get(session_url)
-            .then(res => {
-                this.setState({
-                    user: res.data,
-                });
-        })
-          .catch(error => {
-            console.log('Error fetching and parsing data', error);
-        });
-      };
+    //   getUser = () => {
+    //     axios.get(session_url)
+    //         .then(res => {
+    //             this.setState({
+    //                 user: res.data,
+    //             });
+    //     })
+    //       .catch(error => {
+    //         console.log('Error fetching and parsing data', error);
+    //     });
+    //   };
 
       userInput = (e) => {
           this.setState({
               [e.target.id]: e.target.value
           });
       }
+
+        formReset = (e) => {
+            e.preventDefault();
+            document.getElementById("sigin-form").reset();
+            window.location='/courses'
+        }
 
 
       render() {
@@ -81,9 +96,10 @@ export class Provider extends Component {
                 password: this.state.password,
                 actions: {
                     getAuthenticated: this.getAuthenticated,
-                    getUser: this.getUser,
+                    // getUser: this.getUser,
                     getUnAuthenticated: this.getUnAuthenticated,
-                    userInput: this.userInput
+                    userInput: this.userInput,
+                    formReset: this.formReset
                 }
             }}>          
                 {this.props.children}

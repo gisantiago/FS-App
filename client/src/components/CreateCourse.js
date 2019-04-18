@@ -6,12 +6,12 @@ class CreateCourse extends Component {
     render() {
         return (
             <div>
-            <div class="header">
+            {/* <div class="header">
                 <div class="bounds">
                 <h1 class="header--logo">Courses</h1>
                 <nav><span>Welcome Joe Smith!</span><a class="signout" href="index.html">Sign Out</a></nav>
                 </div>
-            </div>
+            </div> */}
             <hr />
             <div class="bounds course--detail">
                 <h1>Create Course</h1>
