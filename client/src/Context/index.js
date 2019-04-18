@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 const session_url = `http://localhost:5000/api/users`;
 
+
 const AuthContext = React.createContext();
 
 export class Provider extends Component {
@@ -23,18 +24,22 @@ export class Provider extends Component {
       getAuthenticated = (e) => {
         
         e.preventDefault();
-        const username = this.state.emailAddress;
-        const password = this.state.password;
-        const basicAuth = 'Basic ' + btoa(username + ':' + password);
-        axios.get({
-            session_url,
-            headers: { 'Authorization': + basicAuth }
+        // const username = this.state.emailAddress;
+        // const password = this.state.password;
+        // const basicAuth = 'Basic ' + btoa(username + ':' + password);
+        axios.get(`http://localhost:5000/api/users`, {
+            // headers: { 'Authorization': + basicAuth }
+            auth: {
+                username: this.state.emailAddress,
+                password: this.state.password
+            }
         }).then(res => {
+            
             this.setState({
                 user: `${res.data.firstName} ${res.data.lastName}`,
                 isAuth: true,
             });
-            console.log('Authenticated');
+            console.log('Authenticated')
         }).catch(function(error) {
         console.log('Error on Authentication');
         });
@@ -42,8 +47,8 @@ export class Provider extends Component {
     
       getUnAuthenticated = () => {
         this.setState({
-          user: null,
-          isAuth: false
+            user: null,
+            isAuth: false
         });
       }
     
@@ -64,6 +69,7 @@ export class Provider extends Component {
               [e.target.id]: e.target.value
           });
       }
+
 
       render() {
         return (

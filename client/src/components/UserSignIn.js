@@ -3,11 +3,11 @@ import { Consumer } from '../Context';
 
 
 export default class UserSignIn extends Component {
-    
+
     render() {
         return (
             <Consumer>
-                {( actions ) => (
+                { ({ actions }) => (
                     <div>
                     {/* <div className="header">
                         <div className="bounds">
@@ -20,9 +20,9 @@ export default class UserSignIn extends Component {
                         <div className="grid-33 centered signin">
                         <h1>Sign In</h1>
                         <div>
-                            <form onSubmit={actions.actions.getAuthenticated}>
-                            <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange={actions.actions.userInput} /></div>
-                            <div><input id="password" name="password" type="password" className="" placeholder="Password" onChange={actions.actions.userInput} /></div>
+                            <form onSubmit={actions.getAuthenticated}>
+                            <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange={actions.userInput} /></div>
+                            <div><input id="password" name="password" type="password" className="" placeholder="Password" onChange={actions.userInput} /></div>
                             <div className="grid-100 pad-bottom">
                                 <button className="button" type="submit">Sign In</button>
                                 <button className="button button-secondary">Cancel</button>
@@ -37,7 +37,7 @@ export default class UserSignIn extends Component {
                 )}
             </Consumer>
         );
-        console.log(document.getElementById('emailAddress').getAttribute('value'));
+        // console.log(document.getElementById('emailAddress').getAttribute('value'));
     }
     
 }

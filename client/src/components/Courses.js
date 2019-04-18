@@ -29,7 +29,7 @@ class Courses extends Component {
 
         return this.state.courses.map(course => {
             return (
-            <div key={course._id} className="grid-33"><a className="course--module course--link" href={`./CourseDetail/${course._id}`}>
+            <div key={course._id} className="grid-33"><a className="course--module course--link" href={`./courses/course-detail/${course._id}`}>
             <h4 className="course--label">Course</h4>
             <h3 className="course--title">{course.title}</h3>
             </a></div>
