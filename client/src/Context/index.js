@@ -42,12 +42,17 @@ export class Provider extends Component {
         }).then(res => {
             this.setState({
                 user: `${res.data.firstName} ${res.data.lastName}`,
+                username: res.data.emailAddress,
+                password: res.data.password,
                 isAuth: true
             });
-            localStorage.setItem("user");
+            localStorage.setItem("user", this.state.user);
+            localStorage.setItem("isAuth", this.state.isAuth);
+            localStorage.setItem("username", this.state.username);
+            localStorage.setItem("password", this.state.password);
             console.log('Authenticated');
-            // window.location='/courses'
-            this.saveItem('id_token', res.id_token);
+            window.location='/courses'
+            // this.saveItem('id_token', res.id_token);
         }).catch(function(error) {
         console.log('Error on Authentication');
         });
@@ -58,20 +63,9 @@ export class Provider extends Component {
             user: null,
             isAuth: false
         });
-        localStorage.removeItem("user");
+        localStorage.clear();
       }
     
-    //   getUser = () => {
-    //     axios.get(session_url)
-    //         .then(res => {
-    //             this.setState({
-    //                 user: res.data,
-    //             });
-    //     })
-    //       .catch(error => {
-    //         console.log('Error fetching and parsing data', error);
-    //     });
-    //   };
 
       userInput = (e) => {
           this.setState({

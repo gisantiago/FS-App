@@ -12,8 +12,8 @@ export default class header extends Component {
                         <div className="bounds">
                             <h1 className="header--logo" >Courses</h1>
                             
-                                { context.isAuth ? (
-                                    <nav><span>Welcome {context.user}!</span><a className="signout" href="/signout" onClick={context.actions.getUnAuthenticated} >Sign Out</a></nav>
+                                { localStorage.getItem("isAuth") ? (
+                                    <nav><span>Welcome {localStorage.getItem("user")}!</span><a className="signout" href="/signout" onClick={context.actions.getUnAuthenticated} >Sign Out</a></nav>
                                 ) : (
                                     <nav><a className="signup" href="/signup">Sign Up</a><a className="signin" href="/signin">Sign In</a></nav>
                                 ) 
