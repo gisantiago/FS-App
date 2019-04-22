@@ -67,7 +67,7 @@ class CourseDetail extends Component {
                 <div className="actions--bar">
                     <div className="bounds">
                     <div className="grid-100">
-                        { localStorage.getItem("isAuth") && (localStorage.getItem("courseUserID") === localStorage.getItem("userID") )  ? 
+                        { localStorage.getItem("isAuth")   ? 
                             <span><a className="button" href="/courses/:id/update-course">Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a><a className="button button-secondary" href="/">Return to List</a></span>
                         :    
                             <a className="button button-secondary" href="/">Return to List</a> 
