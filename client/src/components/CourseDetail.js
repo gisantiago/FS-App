@@ -6,8 +6,7 @@ class CourseDetail extends Component {
 
 
     state = {
-        course: [],
-        id: ''
+        course: []
     }
     
     componentDidMount() {
@@ -21,22 +20,31 @@ class CourseDetail extends Component {
                     course: res.data,
                     user: `${res.data.user.firstName} ${res.data.user.lastName}`
                 });
+                localStorage.setItem("courseUserID", this.state.course.user._id);
+               
         }).catch(error => {
             console.log('Error fetching and parsing data', error);
         });
     }
 
-    deleteCourse = () => {
-        //  e.preventDefault();
+    
+    deleteCourse = async () => {
+        // e.preventDefault();
 
-        axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`, {
+        console.log(localStorage.getItem('username'));
+        console.log(localStorage.getItem("password"));
+        console.log(localStorage.getItem("userID"));
+        console.log(localStorage.getItem("courseUserID"));
+ 
+        axios.delete(`http://localhost:5000/api/courses/${this.state.course._id}`, {
             
-            withCredentials: true,
+            // withCredentials: true,
             auth: {
                 username: localStorage.getItem('username'),
                 password: localStorage.getItem('password')
             }
         }).then(res => {
+            // this.props.history.push('/courses')
             console.log(res);
             console.log(res.data);
         }).catch(error => {
@@ -58,7 +66,14 @@ class CourseDetail extends Component {
                 <div>
                 <div className="actions--bar">
                     <div className="bounds">
-                    <div className="grid-100"><span><a className="button" href="/courses/:id/update-course">Update Course</a><a className="button" onClick={this.deleteCourse} href="/courses">Delete Course</a></span><a className="button button-secondary" href="/">Return to List</a></div>
+                    <div className="grid-100">
+                        { localStorage.getItem("isAuth") && (localStorage.getItem("courseUserID") === localStorage.getItem("userID") )  ? 
+                            <span><a className="button" href="/courses/:id/update-course">Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a><a className="button button-secondary" href="/">Return to List</a></span>
+                        :    
+                            <a className="button button-secondary" href="/">Return to List</a> 
+                        
+                        }
+                    </div>
                     </div>
                 </div>
                 <div className="bounds course--detail">

@@ -16,7 +16,6 @@ export class Provider extends Component {
       lastName: null,
       emailAddress: null,
       password: null,
-      id: null,
       isAuth: false
     };
   }
@@ -34,17 +33,18 @@ export class Provider extends Component {
         }
     }).then(res => {
         this.setState({
+            userData: res.data,
             user: `${res.data.firstName} ${res.data.lastName}`,
             username: res.data.emailAddress,
             password: res.data.password,
-            id: this.state.id,
             isAuth: true
         });
+        localStorage.setItem("userID", this.state.userData._id);
         localStorage.setItem("user", this.state.user);
         localStorage.setItem("isAuth", this.state.isAuth);
         localStorage.setItem("username", this.state.username);
         localStorage.setItem("password", this.state.password);
-        localStorage.setItem("id", this.state.id);
+        
         console.log('Authenticated');
         window.location='/courses'
         // this.saveItem('id_token', res.id_token);
@@ -83,6 +83,7 @@ export class Provider extends Component {
             user: this.state.user,
             username: this.state.emailAddress,
             password: this.state.password,
+            userID: this.state.userID,
             actions: {
                 getAuthenticated: this.getAuthenticated,
                 // getUser: this.getUser,
