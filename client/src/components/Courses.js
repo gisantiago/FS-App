@@ -34,7 +34,7 @@ class Courses extends Component {
             <h3 className="course--title">{course.title}</h3>
             </a></div>
             )
-        })
+        });
        
     }
     render(){

@@ -4,33 +4,48 @@ import axios from 'axios';
 
 class CourseDetail extends Component {
 
-    // constructor(props) {
-    //     super(props)
-    //     this.state = {
-    //         course: null
-    //     };
-    // }
+
     state = {
-        course: []
+        course: [],
+        id: ''
     }
     
     componentDidMount() {
+        this.getCourseById();
+    }
+
+    getCourseById() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(res => {
                 this.setState({
                     course: res.data,
                     user: `${res.data.user.firstName} ${res.data.user.lastName}`
                 });
-        })
-          .catch(error => {
+        }).catch(error => {
             console.log('Error fetching and parsing data', error);
         });
     }
 
-   
+    deleteCourse = () => {
+        //  e.preventDefault();
+
+        axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`, {
+            
+            withCredentials: true,
+            auth: {
+                username: localStorage.getItem('username'),
+                password: localStorage.getItem('password')
+            }
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        }).catch(error => {
+            console.log('Error: deleting the course', error);
+        });
+    }
     
     render () {
-        console.log(this.state.user);
+        // console.log(this.state.course.user);
         return (
             <div>
                 {/* <div className="header">
@@ -43,7 +58,7 @@ class CourseDetail extends Component {
                 <div>
                 <div className="actions--bar">
                     <div className="bounds">
-                    <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="#">Delete Course</a></span><a className="button button-secondary" href="/">Return to List</a></div>
+                    <div className="grid-100"><span><a className="button" href="/courses/:id/update-course">Update Course</a><a className="button" onClick={this.deleteCourse} href="/courses">Delete Course</a></span><a className="button button-secondary" href="/">Return to List</a></div>
                     </div>
                 </div>
                 <div className="bounds course--detail">
