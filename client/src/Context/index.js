@@ -36,7 +36,6 @@ export class Provider extends Component {
             userData: res.data,
             user: `${res.data.firstName} ${res.data.lastName}`,
             username: res.data.emailAddress,
-            password: res.data.password,
             isAuth: true
         });
         localStorage.setItem("userID", this.state.userData.user_id);
@@ -73,6 +72,8 @@ export class Provider extends Component {
       document.getElementById("sigin-form").reset();
       window.location='/courses'
   }
+
+  
 
 
   render() {

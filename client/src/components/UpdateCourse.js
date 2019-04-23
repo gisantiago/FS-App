@@ -3,6 +3,36 @@ import React, { Component } from 'react';
 
 class UpdateCourse extends Component {
 
+    
+    constructor(props) {
+        super(props);
+            this.state = {
+            user: null,
+            firstName: null,
+            lastName: null,
+            emailAddress: null,
+            password: null,
+            isAuth: false
+            };
+    }
+
+    componentDidMount() {
+        this.getCourseById();
+    }
+
+    getCourseById() {
+        axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
+            .then(res => {
+                this.setState({
+                    course: res.data,
+                    user: `${res.data.user.firstName} ${res.data.user.lastName}`,
+                    userID: res.data.user._id,
+                });
+                
+        }).catch(error => {
+            console.log('Error fetching and parsing data', error);
+    });
+
     render() {
         return (
             <div>

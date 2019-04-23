@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Consumer } from '../Context';
 
 
+
 class CourseDetail extends Component {
 
 
@@ -22,7 +23,7 @@ class CourseDetail extends Component {
                 this.setState({
                     course: res.data,
                     user: `${res.data.user.firstName} ${res.data.user.lastName}`,
-                    userID: res.data.user._id
+                    userID: res.data.user._id,
                 });
                 
         }).catch(error => {
@@ -32,13 +33,11 @@ class CourseDetail extends Component {
   
     
     deleteCourse =  (e) => {
-         e.preventDefault();
+        e.preventDefault();
 
-        console.log(localStorage.getItem('username'));
-        console.log(localStorage.getItem("password"));
-        console.log(localStorage.getItem("userID"));
-
- 
+        // console.log(localStorage.getItem('username'));
+        // console.log(localStorage.getItem("password"));
+    
         axios.delete(`http://localhost:5000/api/courses/${this.state.course._id}`, {
             auth: {
                 username: localStorage.getItem('username'),
@@ -53,15 +52,6 @@ class CourseDetail extends Component {
         });
     }
 
-    // displayUpdateDeleteButtons() {
-    //     if (localStorage.getItem("isAuth") && (this.state.userID === context.userID) ) {
-    //         // if ( localStorage.getItem("courseUserID") === localStorage.getItem("userID") ) {
-    //         return <span><a className="button" href="/courses/:id/update-course">Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a><a className="button button-secondary" href="/">Return to List</a></span>
-    //         // }
-    //     } else {
-    //         return <a className="button button-secondary" href="/">Return to List</a> 
-    //     }
-    // }
     
     render () {
         return (
