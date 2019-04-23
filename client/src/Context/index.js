@@ -39,7 +39,7 @@ export class Provider extends Component {
             password: res.data.password,
             isAuth: true
         });
-        localStorage.setItem("userID", this.state.userData._id);
+        localStorage.setItem("userID", this.state.userData.user_id);
         localStorage.setItem("user", this.state.user);
         localStorage.setItem("isAuth", this.state.isAuth);
         localStorage.setItem("username", this.state.username);
