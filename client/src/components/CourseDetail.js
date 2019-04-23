@@ -70,7 +70,7 @@ class CourseDetail extends Component {
                             <div className="bounds">
                             <div className="grid-100">
                                 { localStorage.getItem("isAuth") && (this.state.userID === localStorage.getItem("userID"))   ? 
-                                    <span><a className="button" href="/courses/:id/update-course">Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a><a className="button button-secondary" href="/">Return to List</a></span>
+                                    <span><a className="button" href={`/courses/${this.state.course._id}/update-course`}>Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a><a className="button button-secondary" href="/">Return to List</a></span>
                                 :    
                                     <a className="button button-secondary" href="/">Return to List</a> 
                                 
@@ -97,21 +97,12 @@ class CourseDetail extends Component {
                                 <ul className="course--stats--list">
                                 <li className="course--stats--list--item">
                                     <h4>Estimated Time</h4>
-                                    <h3>14 hours</h3>
+                                    <h3>{this.state.course.estimatedTime}</h3>
                                 </li>
                                 <li className="course--stats--list--item">
                                     <h4>Materials Needed</h4>
                                     <ul>
-                                    <li>1/2 x 3/4 inch parting strip</li>
-                                    <li>1 x 2 common pine</li>
-                                    <li>1 x 4 common pine</li>
-                                    <li>1 x 10 common pine</li>
-                                    <li>1/4 inch thick lauan plywood</li>
-                                    <li>Finishing Nails</li>
-                                    <li>Sandpaper</li>
-                                    <li>Wood Glue</li>
-                                    <li>Wood Filler</li>
-                                    <li>Minwax Oil Based Polyurethane</li>
+                                    <li>{this.state.course.materialsNeeded}</li>
                                     </ul>
                                 </li>
                                 </ul>
