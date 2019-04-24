@@ -107,8 +107,8 @@ class UpdateCourse extends Component {
                             <ul className="course--stats--list">
                             <li className="course--stats--list--item">
                                 <h4>Estimated Time</h4>
-                                <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
-                                    placeholder="Hours" value={this.state.estimatedTime} onChange={this.userInput} /></div>
+                                <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" value={this.state.estimatedTime} onChange={this.userInput} />
+                                </div>
                             </li>
                             <li className="course--stats--list--item">
                                 <h4>Materials Needed</h4>
