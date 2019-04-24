@@ -7,16 +7,23 @@ class UpdateCourse extends Component {
 
     
     constructor(props) {
-        super(props);
-            this.state = {
-                course: {},
-                title: '',
-                description: '',
-                estimatedTime: '',
-                materialsNeeded: '',
-                id: ''
-            };
+        super(props)
+        this.state = {
+            course: {},
+            title: '',
+            description: '',
+            estimatedTime: '',
+            materialsNeeded: '',
+            id: ''
+        };
+        this.updateCourse = this.updateCourse.bind(this);
     }
+
+    userInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    };
 
     componentDidMount() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
@@ -34,11 +41,6 @@ class UpdateCourse extends Component {
         });
     }
 
-    userInput = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    };
 
     cancelUpdate = (e) => {
         e.preventDefault();
@@ -53,7 +55,7 @@ class UpdateCourse extends Component {
         console.log(this.state.estimatedTime);
     
         axios.put(`http://localhost:5000/api/courses/${this.state.course._id}`, 
-        {
+         {
             title: this.state.title,
             description: this.state.description,
             estimatedTime: this.state.estimatedTime,
@@ -67,6 +69,7 @@ class UpdateCourse extends Component {
         }).then(res => {
             console.log(res);
             console.log(res.data);
+            console.log(this.state.title);
             this.props.history.push(`/courses/course-detail/${this.state.id}`);
         }).catch(error => {
             console.log('Error: Updating the course details', error);
