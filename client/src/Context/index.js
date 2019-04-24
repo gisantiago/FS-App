@@ -36,11 +36,15 @@ export class Provider extends Component {
             userData: res.data,
             user: `${res.data.firstName} ${res.data.lastName}`,
             username: res.data.emailAddress,
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
             isAuth: true
         });
         localStorage.setItem("userID", this.state.userData.user_id);
         localStorage.setItem("user", this.state.user);
         localStorage.setItem("isAuth", this.state.isAuth);
+        localStorage.setItem("firstName", this.state.firstName);
+        localStorage.setItem("lastName", this.state.lastName);
         localStorage.setItem("username", this.state.username);
         localStorage.setItem("password", this.state.password);
         
@@ -63,7 +67,7 @@ export class Provider extends Component {
 
   userInput = (e) => {
       this.setState({
-          [e.target.id]: e.target.value
+        [e.target.id]: e.target.value
       });
   }
 

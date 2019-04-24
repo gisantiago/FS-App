@@ -70,7 +70,10 @@ class CourseDetail extends Component {
                             <div className="bounds">
                             <div className="grid-100">
                                 { localStorage.getItem("isAuth") && (this.state.userID === localStorage.getItem("userID"))   ? 
-                                    <span><a className="button" href={`/courses/${this.state.course._id}/update-course`}>Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a><a className="button button-secondary" href="/">Return to List</a></span>
+                                    <span>
+                                        <a className="button" href={`/courses/${this.state.course._id}/update-course`}>Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a>
+                                        <a className="button button-secondary" href={`/courses`}>Return to List</a>
+                                    </span>
                                 :    
                                     <a className="button button-secondary" href="/">Return to List</a> 
                                 
@@ -102,7 +105,7 @@ class CourseDetail extends Component {
                                 <li className="course--stats--list--item">
                                     <h4>Materials Needed</h4>
                                     <ul>
-                                    <li>{this.state.course.materialsNeeded}</li>
+                                        <li>{this.state.course.materialsNeeded}</li>
                                     </ul>
                                 </li>
                                 </ul>
