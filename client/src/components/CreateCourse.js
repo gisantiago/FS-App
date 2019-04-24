@@ -93,7 +93,7 @@ class CreateCourse extends Component {
                     <div className="course--header">
                         <h4 className="course--label">Course</h4>
                         <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." value={this.state.title} onChange={this.userInput} /></div>
-                        <p>By Joe Smith</p>
+                        <p>{`By ${localStorage.getItem('user')}`}</p>
                     </div>
                     <div className="course--description">
                         <div><textarea id="description" name="description" className="" placeholder="Course description..." value={this.state.description} onChange={this.userInput}></textarea></div>
