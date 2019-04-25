@@ -203,25 +203,45 @@ router.post("/courses", authenticateUser, [titleValidator, dscpValidator], (req,
 //PUT: /api/course/:id 200
 //Route to updates a course and return no content 
 router.put("/courses/:id", authenticateUser, (req, res, next) => {
-    const currUser = req.currentUser.id;
-    const courseUser = req.course.user;
-    // Testing for equality
-    // const isEql = currUser == courseUser;
-    // console.log("Current User: " + currUser);
-    // console.log("courseUser: " + courseUser);
-    // console.log(isEql);
+    // const currUser = req.currentUser.id;
+    // const courseUser = req.course.user;
+   
+    
+    // if (currUser == courseUser) {
+    //     Course.findOneAndUpdate(req.params.id, {$set:req.body}, (err, result) => {
+    //         if(err) return next(err);
+    //         res.status(204);
+    //         res.json();
+    //     });
+    // } else {
+    //     const err = new Error('You do not have permissions to update this course');
+    //     err.status = 403;
+    //     return next(err);
+    // }
 
-    if (currUser == courseUser) {
-        Course.findOneAndUpdate(req.params.id, {$set:req.body}, (err, result) => {
-            if(err) return next(err);
-            res.status(204);
-            res.json();
-        });
-    } else {
-        const err = new Error('You do not have permissions to update this course');
-        err.status = 403;
-        return next(err);
-    }
+    
+     Course.findById(req.params.id)
+     .exec(function (err, courses) {
+         if(err) return next(err);
+         if(!courses){
+             res.status(404).end();
+             return;
+         }
+     });
+
+    const data = {
+        title: req.body.title,
+        description: req.body.description,
+        estimatedTime: req.body.estimatedTime,
+        materialsNeeded: req.body.materialsNeeded
+    };
+    Course.updateMany({_id: req.params.id,user: req.currentUser._id}, { ...data}, function (err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.status(204).end();
+        }
+    });
 });
 
 //DELETE: /api/course/:id 200

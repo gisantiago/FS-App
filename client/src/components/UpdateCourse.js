@@ -3,26 +3,20 @@ import axios from 'axios';
 
 
 
+
 class UpdateCourse extends Component {
 
     
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            course: {},
+            course: [],
             title: '',
             description: '',
             estimatedTime: '',
             materialsNeeded: '',
             id: ''
         };
-       
-    }
-
-    userInput = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
     };
 
     componentDidMount() {
@@ -39,13 +33,9 @@ class UpdateCourse extends Component {
         }).catch(error => {
             console.log('Error fetching and parsing data', error);
         });
-    }
+    };
 
 
-    cancelUpdate = (e) => {
-        e.preventDefault();
-        this.props.history.push(`/courses/course-detail/${this.state.id}`);
-    }
     
     updateCourse =  (e) => {
         e.preventDefault();
@@ -55,7 +45,7 @@ class UpdateCourse extends Component {
         console.log(this.state.estimatedTime);
     
         axios.put(`http://localhost:5000/api/courses/${this.state.course._id}`, 
-         {
+         { 
             title: this.state.title,
             description: this.state.description,
             estimatedTime: this.state.estimatedTime,
@@ -74,7 +64,18 @@ class UpdateCourse extends Component {
         }).catch(error => {
             console.log('Error: Updating the course details', error);
         });
-    }
+    };
+
+    userInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    };
+
+    cancelUpdate = (e) => {
+        e.preventDefault();
+        this.props.history.push(`/courses/course-detail/${this.state.id}`);
+    };
 
 
     render() {

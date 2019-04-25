@@ -91,7 +91,6 @@ export class Provider extends Component {
             userID: this.state.userID,
             actions: {
                 getAuthenticated: this.getAuthenticated,
-                // getUser: this.getUser,
                 getUnAuthenticated: this.getUnAuthenticated,
                 userInput: this.userInput,
                 formReset: this.formReset

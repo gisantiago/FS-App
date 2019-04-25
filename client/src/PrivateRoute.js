@@ -6,7 +6,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Consumer>
         { ({ isAuth }) => (
             <Route {...rest} render={props => (
-                localStorage.getItem('userID')
+                localStorage.getItem('user')
                     ? <Component {...props} />
                     : <Redirect to={{ pathname: '/signin', state: { from: props.location } }} />
             )} />
