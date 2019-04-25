@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import ReactMarkdown  from 'react-markdown';
 import axios from 'axios';
 import { Consumer } from '../Context';
+
 
 
 
@@ -92,7 +94,7 @@ class CourseDetail extends Component {
                             </div>
 
                             <div className="course--description">
-                                <p>{this.state.course.description}</p>
+                                <ReactMarkdown>{this.state.course.description}</ReactMarkdown>
                             </div>
                             </div>
                             <div className="grid-25 grid-right">
@@ -104,9 +106,7 @@ class CourseDetail extends Component {
                                 </li>
                                 <li className="course--stats--list--item">
                                     <h4>Materials Needed</h4>
-                                    <ul>
-                                        <li>{this.state.course.materialsNeeded}</li>
-                                    </ul>
+                                    <ReactMarkdown>{this.state.course.materialsNeeded}</ReactMarkdown>
                                 </li>
                                 </ul>
                             </div>

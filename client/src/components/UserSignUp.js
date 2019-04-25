@@ -5,41 +5,7 @@ import { Consumer } from '../Context';
 
 class UserSignUp extends Component {
 
-    // constructor(props) {
-    //   super(props)
-    //     this.state = {
-    //       firstName: '',
-    //       lastName: '',
-    //       emailAddress: '',
-    //       password: '',
-    //       confirmPassword: ''      
-    //     }
-    // }
 
-  //   userInput = (e) => {
-  //     this.setState({
-  //         [e.target.name]: e.target.value
-  //     });
-  // };
-
-  // createUser(e) {
-  //     e.preventDefault();
-  //     console.log(this.state.firstName);
-
-  //     axios.post('http://localhost:5000/api/users', 
-  //         {
-  //           firstName: this.state.firstName,
-  //           lastName: this.state.lastName,
-  //           emailAddress: this.state.emailAddress,
-  //           password: this.state.password
-  //     }).then(res => {
-  //         console.log(res);
-  //         console.log(res.data);
-  //         // this.props.history.push("/courses");
-  //     }).catch(error => {
-  //         console.log('Error: Updating the course details', error);
-  //     });
-  // }
 
   cancelUser = (e) => {
       e.preventDefault();
@@ -75,7 +41,7 @@ class UserSignUp extends Component {
                     </form>
                   </div>
                   <p>&nbsp;</p>
-                  <p>Already have a user account? <a href="sign-in.html">Click here</a> to sign in!</p>
+                  <p>Already have a user account? <a href="/signin">Click here</a> to sign in!</p>
                 </div>
               </div>
             </div>

@@ -5,9 +5,10 @@ import './index.css';
 import App from './App';
 // import * as serviceWorker from './serviceWorker';
 
+import store from './store.js';
 
 ReactDOM.render(
-    <Provider> 
+    <Provider store={ store }> 
         <App />
     </Provider>, 
     document.getElementById('root')
