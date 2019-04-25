@@ -11,18 +11,19 @@ export class Provider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
-      firstName: null,
-      lastName: null,
-      emailAddress: null,
-      password: null,
+      user: '',
+      firstName: '',
+      lastName: '',
+      emailAddress: '',
+      password: '',
       isAuth: false
-    };
+    }
+     this.createUser = this.createUser.bind(this)
   }
     
-  getAuthenticated =  (e) => {
+  getAuthenticated =  () => {
     
-    e.preventDefault();
+    // e.preventDefault();
     // if (!this.state.emailAddress || !this.state.password) return;
 
     axios.get(`http://localhost:5000/api/users`, {
@@ -77,6 +78,26 @@ export class Provider extends Component {
       window.location='/courses'
   }
 
+
+  createUser(e) {
+    e.preventDefault();
+    console.log(this.state.firstName);
+
+    axios.post('http://localhost:5000/api/users', 
+        {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          emailAddress: this.state.emailAddress,
+          password: this.state.password
+    }).then(res => {
+        console.log(res);
+        console.log(res.data);
+        this.getAuthenticated();
+    }).catch(error => {
+        console.log('Error: Creating user account', error);
+    });
+  }
+
   
 
 
@@ -89,11 +110,13 @@ export class Provider extends Component {
             username: this.state.emailAddress,
             password: this.state.password,
             userID: this.state.userID,
+            firstName: this.state.firstName,
             actions: {
                 getAuthenticated: this.getAuthenticated,
                 getUnAuthenticated: this.getUnAuthenticated,
                 userInput: this.userInput,
-                formReset: this.formReset
+                formReset: this.formReset,
+                createUser: this.createUser
             }
         }}>          
             {this.props.children}
