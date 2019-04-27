@@ -5,7 +5,11 @@ import { Consumer } from '../Context';
 
 class UserSignUp extends Component {
 
-
+  showError(errors) {
+    const errorList = errors.map((error) =>
+      <li key={error.toString()}>{error}</li>);
+    return errorList;
+  }
 
   cancelUser = (e) => {
       e.preventDefault();
@@ -13,9 +17,10 @@ class UserSignUp extends Component {
   }
 
   render() {
+      
       return (
         <Consumer>
-          { ({ actions, firstName, lastName, username, password }) => (
+          { ({ actions, firstName, lastName, username, password, confirmPassword, errors }) => (
               <div>
               {/* <div class="header">
                 <div class="bounds">
@@ -27,13 +32,25 @@ class UserSignUp extends Component {
               <div className="bounds">
                 <div className="grid-33 centered signin">
                   <h1>Sign Up</h1>
+
+                  <div>
+                    <div className="validation-errors">
+                      <ul>
+                        {this.showError(errors)}
+                      </ul>
+                    </div>
+                  </div>
+
+
                   <div>
                     <form onSubmit={actions.createUser} > 
                       <div><input id="firstName" name="firstName" type="text" className="" placeholder="First Name" value={firstName} onChange={actions.userInput} /></div>
                       <div><input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" value={lastName} onChange={actions.userInput} /></div>
                       <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" value={username} onChange={actions.userInput} /></div>
                       <div><input id="password" name="password" type="password" className="" placeholder="Password" value={password} onChange={actions.userInput} /></div>
-                      <div><input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password" value={password} onChange={actions.userInput} /></div>
+                      <div>
+                        <input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password" value={confirmPassword} onChange={actions.userInput} />
+                      </div>
                       <div className="grid-100 pad-bottom">
                         <button className="button" type="submit" >Sign Up</button>
                         <button className="button button-secondary" type="button" onClick={this.cancelUser} >Cancel</button>

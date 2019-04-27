@@ -16,15 +16,45 @@ export class Provider extends Component {
       lastName: '',
       emailAddress: '',
       password: '',
-      isAuth: false
+      confirmPassword: '',
+      isAuth: false,
+      errors: []
     }
      this.createUser = this.createUser.bind(this)
   }
+
+  createUser(e) {
+    e.preventDefault();
+    console.log(this.state.firstName);
+
+    if (this.state.password !== this.state.confirmPassword) {
+      alert("Passwords don't match");
+    } else {
+
+      axios.post('http://localhost:5000/api/users', 
+          {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            emailAddress: this.state.emailAddress,
+            password: this.state.password,
+            confirmPassword: this.state.confirmPassword
+      }).then(res => {
+          if (res.status === 201) {
+            this.getAuthenticated();
+          } else {
+            throw new Error();
+          } 
+      }).catch(err => {
+          console.log("Error = ", err.response.data.errors);
+          this.setState({
+            errors: err.response.data.errors
+          });
+      });
+    }
+  }
     
   getAuthenticated =  () => {
-    
     // e.preventDefault();
-    // if (!this.state.emailAddress || !this.state.password) return;
 
     axios.get(`http://localhost:5000/api/users`, {
         // headers: { 'Authorization': + basicAuth }
@@ -79,28 +109,6 @@ export class Provider extends Component {
   }
 
 
-  createUser(e) {
-    e.preventDefault();
-    console.log(this.state.firstName);
-
-    axios.post('http://localhost:5000/api/users', 
-        {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          emailAddress: this.state.emailAddress,
-          password: this.state.password
-    }).then(res => {
-        console.log(res);
-        console.log(res.data);
-        this.getAuthenticated();
-    }).catch(error => {
-        console.log('Error: Creating user account', error);
-    });
-  }
-
-  
-
-
   render() {
     return (
       <AuthContext.Provider
@@ -111,6 +119,8 @@ export class Provider extends Component {
             password: this.state.password,
             userID: this.state.userID,
             firstName: this.state.firstName,
+            confirmPassword: this.state.confirmPassword,
+            errors: this.state.errors,
             actions: {
                 getAuthenticated: this.getAuthenticated,
                 getUnAuthenticated: this.getUnAuthenticated,

@@ -15,9 +15,44 @@ class UpdateCourse extends Component {
             description: '',
             estimatedTime: '',
             materialsNeeded: '',
-            id: ''
-        };
+            id: '',
+            errors: []
+        }
+        this.updateCourse = this.updateCourse.bind(this)
     };
+    
+    updateCourse =  (e) => {
+         e.preventDefault();
+        // console.log(localStorage.getItem('username'));
+        // console.log(localStorage.getItem("password"));
+        // console.log(this.state.title);
+        // console.log(this.state.estimatedTime);
+    
+        axios.put(`http://localhost:5000/api/courses/${this.state.course._id}`, 
+         { 
+            title: this.state.title,
+            description: this.state.description,
+            estimatedTime: this.state.estimatedTime,
+            materialsNeeded: this.state.materialsNeeded
+        },
+        {
+            auth: {
+                username: localStorage.getItem('username'),
+                password: localStorage.getItem('password')
+            }
+        }).then(res => {
+            if (res.status === 204) {
+                this.props.history.push(`/courses/course-detail/${this.state.course._id}`);
+              } else {
+                throw new Error();
+              } 
+        }).catch(err => {
+            console.log("Error = ", err.response.data.errors);
+            this.setState({
+              errors: err.response.data.errors
+            });
+        });
+    }
 
     componentDidMount() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
@@ -35,37 +70,6 @@ class UpdateCourse extends Component {
         });
     };
 
-
-    
-    updateCourse =  (e) => {
-        e.preventDefault();
-        // console.log(localStorage.getItem('username'));
-        // console.log(localStorage.getItem("password"));
-        console.log(this.state.title);
-        console.log(this.state.estimatedTime);
-    
-        axios.put(`http://localhost:5000/api/courses/${this.state.course._id}`, 
-         { 
-            title: this.state.title,
-            description: this.state.description,
-            estimatedTime: this.state.estimatedTime,
-            materialsNeeded: this.state.materialsNeeded
-        },
-        {
-            auth: {
-                username: localStorage.getItem('username'),
-                password: localStorage.getItem('password')
-            }
-        }).then(res => {
-            console.log(res);
-            console.log(res.data);
-            console.log(this.state.title);
-            this.props.history.push(`/courses/course-detail/${this.state.id}`);
-        }).catch(error => {
-            console.log('Error: Updating the course details', error);
-        });
-    };
-
     userInput = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -79,6 +83,9 @@ class UpdateCourse extends Component {
 
 
     render() {
+        const errors =  this.state.errors; 
+        const errorList = errors.map((error) =>
+        <li key={error.toString()}>{error}</li>);
         return (
             <div>
                 {/* <div class="header">
@@ -90,6 +97,14 @@ class UpdateCourse extends Component {
                 <hr />
                 <div className="bounds course--detail">
                     <h1>Update Course</h1>
+                    <div>
+                        { errorList.length > 0 ?(<h2 className="validation--errors--label">Validation errors</h2>) : ('')}
+                        <div className="validation-errors">
+                        <ul>
+                            {errorList}
+                        </ul>
+                        </div>
+                    </div>
                     <div>
                     <form onSubmit={ this.updateCourse } >
                         <div className="grid-66">

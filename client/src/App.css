@@ -31,3 +31,13 @@
     transform: rotate(360deg);
   }
 }
+
+input.error {
+  border: 1px solid #EADAE4;
+}
+
+.error {
+  color:#db2269;
+  font-size: 0.625em;
+  display: relative;
+}

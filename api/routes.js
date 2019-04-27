@@ -54,7 +54,12 @@ const emailValidator = check('emailAddress', 'Please enter a valid email')
 //Password Validator
 const pwdValidator = check('password')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please enter a password name');
+  .withMessage('Please enter a password');
+
+// confirmPassword Validator
+// const confirmPasswordValidator = check('confirmPassword')
+//     .matches('password')
+//     .withMessage('Passwords must match.');
 
 // ****** Courses Validator **********
 
@@ -202,8 +207,9 @@ router.post("/courses", authenticateUser, [titleValidator, dscpValidator], (req,
 
 //PUT: /api/course/:id 200
 //Route to updates a course and return no content 
-router.put("/courses/:id", authenticateUser, (req, res, next) => {
-  
+router.put("/courses/:id", authenticateUser, [titleValidator, dscpValidator], (req, res, next) => {
+    const errors = validationResult(req);
+    
     Course.findById(req.params.id)
      .exec(function (err, courses) {
          if(err) return next(err);
@@ -213,14 +219,19 @@ router.put("/courses/:id", authenticateUser, (req, res, next) => {
          }
     });
 
-    const data = {
+    const updates = {
         title: req.body.title,
         description: req.body.description,
         estimatedTime: req.body.estimatedTime,
         materialsNeeded: req.body.materialsNeeded
     };
-    
-    Course.updateMany({_id: req.params.id,user: req.currentUser._id}, { ...data}, (err, result) => {
+
+    if ( !errors.isEmpty() ) {
+        const errorMessages = errors.array().map(error => error.msg);
+        return res.status(400).json({ errors: errorMessages });
+    }
+
+    Course.updateMany({_id: req.params.id,user: req.currentUser._id}, { ...updates}, (err, result) => {
         if (err) {
             next(err);
         } else {

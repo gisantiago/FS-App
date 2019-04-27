@@ -15,7 +15,8 @@ class CreateCourse extends Component {
                     _id: localStorage.getItem("userID"),
                     firstName: localStorage.getItem("firstName"),
                     lastName: localStorage.getItem("lastName")
-                }
+                },
+                errors: []
             }
         this.createCourse = this.createCourse.bind(this)
     }
@@ -53,11 +54,17 @@ class CreateCourse extends Component {
                 password: localStorage.getItem('password')
             }
         }).then(res => {
-            console.log(res);
-            console.log(res.data);
-            this.props.history.push("/courses");
-        }).catch(error => {
-            console.log('Error: Updating the course details', error);
+            if (res.status === 201) {
+                this.props.history.push("/courses");
+              } else {
+                throw new Error();
+              } 
+        }).catch(err => {
+            console.log('Error: Creating the course details', err);
+            console.log("Error = ", err.response.data.errors);
+            this.setState({
+                errors: err.response.data.errors
+            });
         });
     }
 
@@ -67,6 +74,9 @@ class CreateCourse extends Component {
     }
 
     render() {
+        const errors =  this.state.errors; 
+        const errorList = errors.map((error) =>
+        <li key={error.toString()}>{error}</li>);
         return (
             <div>
             {/* <div class="header">
@@ -80,11 +90,11 @@ class CreateCourse extends Component {
                 <h1>Create Course</h1>
                 <div>
                 <div>
-                    <h2 className="validation--errors--label">Validation errors</h2>
+                    { errorList.length > 0 ?(<h2 className="validation--errors--label">Validation errors</h2>) : ('')}
+                    
                     <div className="validation-errors">
                     <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
+                        {errorList}
                     </ul>
                     </div>
                 </div>
