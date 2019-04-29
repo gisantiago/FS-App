@@ -21,13 +21,10 @@ class UpdateCourse extends Component {
         this.updateCourse = this.updateCourse.bind(this)
     };
     
+    // updates a course and redirects to the specific courses page... 
     updateCourse =  (e) => {
          e.preventDefault();
-        // console.log(localStorage.getItem('username'));
-        // console.log(localStorage.getItem("password"));
-        // console.log(this.state.title);
-        // console.log(this.state.estimatedTime);
-    
+
         axios.put(`http://localhost:5000/api/courses/${this.state.course._id}`, 
          { 
             title: this.state.title,
@@ -46,6 +43,7 @@ class UpdateCourse extends Component {
               } else {
                 throw new Error();
               } 
+              //   fetches api validators
         }).catch(err => {
             console.log("Error = ", err.response.data.errors);
             this.setState({
@@ -54,6 +52,7 @@ class UpdateCourse extends Component {
         });
     }
 
+    // Fetches a course by ID to show course's details
     componentDidMount() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(res => {
@@ -76,6 +75,7 @@ class UpdateCourse extends Component {
         });
     };
 
+    
     cancelUpdate = (e) => {
         e.preventDefault();
         this.props.history.push(`/courses/course-detail/${this.state.id}`);
@@ -83,6 +83,7 @@ class UpdateCourse extends Component {
 
 
     render() {
+        // initiate the errors array and iterate over any available validator error from the API 
         const errors =  this.state.errors; 
         const errorList = errors.map((error) =>
         <li key={error.toString()}>{error}</li>);

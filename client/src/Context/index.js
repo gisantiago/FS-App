@@ -23,6 +23,7 @@ export class Provider extends Component {
      this.createUser = this.createUser.bind(this)
   }
 
+  // create user account via the api and authenticate it via the getAuthenticated(). it also fetches any validator error via catch method 
   createUser(e) {
     e.preventDefault();
     console.log(this.state.firstName);
@@ -44,6 +45,7 @@ export class Provider extends Component {
           } else {
             throw new Error();
           } 
+          // fetches api validators
       }).catch(err => {
           console.log("Error = ", err.response.data.errors);
           this.setState({
@@ -53,6 +55,8 @@ export class Provider extends Component {
     }
   }
     
+  //  Authenticate user and set all the localStorage items. This function allow users to create/delete/update courses
+  //  and navigate through private routes such as create-course and update-course
   getAuthenticated =  () => {
     // e.preventDefault();
 
@@ -87,6 +91,7 @@ export class Provider extends Component {
     });
   }
     
+  // Unanthenticate users via setting the isAuth to false and clear all localStorage items
   getUnAuthenticated = () => {
     this.setState({
         user: null,

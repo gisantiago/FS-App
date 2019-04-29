@@ -4,7 +4,7 @@ import { Consumer } from '../Context';
 
 export default class UserSignIn extends Component {
 
-    
+    // Authenticate user via the Context api (Provider/Consumer) logic found @ /Context/Index.js
     render() {
         return (
             <Consumer>

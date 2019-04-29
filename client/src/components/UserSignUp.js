@@ -5,6 +5,7 @@ import { Consumer } from '../Context';
 
 class UserSignUp extends Component {
 
+  // Iterate over any available validator error from the API: Error Array declared and initiated @ /Context/Index.js
   showError(errors) {
     const errorList = errors.map((error) =>
       <li key={error.toString()}>{error}</li>);
@@ -17,7 +18,7 @@ class UserSignUp extends Component {
   }
 
   render() {
-      
+      // Create a user Account and Authenticate user via the Context api (Provider/Consumer) logic found @ /Context/Index.js
       return (
         <Consumer>
           { ({ actions, firstName, lastName, username, password, confirmPassword, errors }) => (

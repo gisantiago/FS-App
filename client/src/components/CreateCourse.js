@@ -27,10 +27,10 @@ class CreateCourse extends Component {
         });
     };
 
+    // creates a course, assigns it to the current user and redirects to all courses page
     createCourse(e) {
         e.preventDefault();
-        // console.log(localStorage.getItem('username'));
-        // console.log(localStorage.getItem("password"));
+
         console.log(this.state.title);
         console.log(this.state.user._id);
         console.log(this.state.user.firstName);
@@ -59,6 +59,7 @@ class CreateCourse extends Component {
               } else {
                 throw new Error();
               } 
+            //   fetches api validators
         }).catch(err => {
             console.log('Error: Creating the course details', err);
             console.log("Error = ", err.response.data.errors);
@@ -74,6 +75,7 @@ class CreateCourse extends Component {
     }
 
     render() {
+        // initiate the errors array and iterate over any available validator error from the API 
         const errors =  this.state.errors; 
         const errorList = errors.map((error) =>
         <li key={error.toString()}>{error}</li>);

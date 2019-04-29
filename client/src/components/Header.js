@@ -11,7 +11,7 @@ export default class header extends Component {
                         <title>Full Stack App with React and a REST API</title>
                         <div className="bounds">
                             <h1 className="header--logo" >Courses</h1>
-                            
+                            {/* If the user has been authenticated, then the header will greets users with a full name welcome message */}
                                 { localStorage.getItem("isAuth") ? (
                                     <nav><span>Welcome {localStorage.getItem("user")}!</span><a className="signout" href="/signout" onClick={context.actions.getUnAuthenticated} >Sign Out</a></nav>
                                 ) : (

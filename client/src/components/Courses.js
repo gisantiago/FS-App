@@ -12,6 +12,7 @@ class Courses extends Component {
         };
     }
     
+    // function to fetch all available courses
     componentDidMount() {
         axios.get('http://localhost:5000/api/courses')
             .then(res => {
@@ -26,7 +27,6 @@ class Courses extends Component {
 
     
     getCourses() {
-
         return this.state.courses.map(course => {
             return (
             <div key={course._id} className="grid-33"><a className="course--module course--link" href={`./courses/course-detail/${course._id}`}>

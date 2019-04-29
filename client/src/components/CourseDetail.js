@@ -19,6 +19,7 @@ class CourseDetail extends Component {
         this.getCourseById();
     }
 
+    // function to fetch course details by ID
     getCourseById() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then(res => {
@@ -33,13 +34,10 @@ class CourseDetail extends Component {
         });
     }
   
-    
+    // Deletes a course and redirects to the "All" courses page
     deleteCourse =  (e) => {
         e.preventDefault();
 
-        // console.log(localStorage.getItem('username'));
-        // console.log(localStorage.getItem("password"));
-    
         axios.delete(`http://localhost:5000/api/courses/${this.state.course._id}`, {
             auth: {
                 username: localStorage.getItem('username'),
@@ -71,9 +69,12 @@ class CourseDetail extends Component {
                         <div className="actions--bar">
                             <div className="bounds">
                             <div className="grid-100">
+                            
+                            {/* the following ternary logic hides the update and delete buttons if the user does not own the course */}
                                 { localStorage.getItem("isAuth") && (this.state.userID === localStorage.getItem("userID"))   ? 
                                     <span>
-                                        <a className="button" href={`/courses/${this.state.course._id}/update-course`}>Update Course</a><a className="button" onClick={this.deleteCourse} >Delete Course</a>
+                                        <a className="button" href={`/courses/${this.state.course._id}/update-course`}>Update Course</a>
+                                        <button className="button" onClick={this.deleteCourse} >Delete Course</button>
                                         <a className="button button-secondary" href={`/courses`}>Return to List</a>
                                     </span>
                                 :    
